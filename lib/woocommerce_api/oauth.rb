@@ -1,3 +1,4 @@
+require "addressable/uri"
 require "digest/sha1"
 require "cgi"
 require "uri"
@@ -42,7 +43,7 @@ module WooCommerce
       params["oauth_timestamp"] = Time.new.to_i
       params["oauth_signature"] = CGI::escape(generate_oauth_signature(params, url))
 
-      query_string = URI::encode(params.map{|key, value| "#{key}=#{value}"}.join("&"))
+      query_string = Addressable::URI.encode(params.map{|key, value| "#{key}=#{value}"}.join("&"))
 
       "#{url}?#{query_string}"
     end
